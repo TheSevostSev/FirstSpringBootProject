@@ -27,5 +27,23 @@ public class PatientController {
         Optional<Patient> patienteOptional = patientRepository.findById(id);
         return patienteOptional;
     }
+
+    @PostMapping("/")
+    public void createPatient(@RequestBody Patient patient){
+        patientRepository.save(patient);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePatient(@PathVariable("id") Integer id){
+        Patient patient = new Patient();
+        patient.setId(id);
+        patientRepository.delete(patient);
+    }
+
+    @PutMapping("/{id}")
+    public void updatePatient(@RequestBody Patient patient, @PathVariable("id") Integer id){
+        patient.setId(id);
+        patientRepository.save(patient);
+    }
 }
 
