@@ -10,7 +10,7 @@ import com.fundesplai.firstspringbootproject.persistence.entities.User;
 import com.fundesplai.firstspringbootproject.persistence.repositories.UserRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUserName(username);
-		if (null == user) {
+		if (user==null) {
 			throw new UsernameNotFoundException("Ususario no encontrado "+username);
 		} 	
 		return user;

@@ -2,14 +2,19 @@ package com.fundesplai.firstspringbootproject.persistence.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +33,18 @@ public class User implements UserDetails {
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
 	private boolean enabled;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "receiverId", cascade = CascadeType.ALL)
+	private List<MessageUser> receivedMessages;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+	private List<MessageUser> sentMessages;
+
+	public int getId(){
+		return id;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
